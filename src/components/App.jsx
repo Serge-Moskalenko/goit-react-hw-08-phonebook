@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import { Phonebook } from "./Phonebook";
 import { Contacts } from "./Contacts";
-// import { nanoid } from 'nanoid'
 
 export class App extends Component {
   state = {
