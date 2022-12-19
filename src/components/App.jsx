@@ -1,77 +1,51 @@
-import React, {Component} from "react";
+import {useState,useEffect} from "react";
 import { Phonebook } from "./Phonebook";
 import { Contacts } from "./Contacts";
 
-export class App extends Component {
-  state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
-    filter: '',
-  }
+export function App() {
+  
+  const [contacts, setContacts] = useState(() => JSON.parse(localStorage.getItem('contacts')) ?? [
+    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+  ]);
 
-  componentDidMount() {
+  const [filter, setFilter] = useState('');
 
-    const contacts = JSON.parse(localStorage.getItem('contacts'));
+  const filteredTodos = contacts.filter(contact => contact.name.toLowerCase().includes(filter));
 
-    if (contacts) {
-       this.setState({contacts})
-    }
-  };
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify( contacts));
+  }, [contacts]);
 
-  componentDidUpdate(prevProps, prevState) {
-
-    const { contacts } = this.state;
-
-    if (prevState.contacts !== contacts) {
-
-      localStorage.setItem('contacts', JSON.stringify(contacts))
-    } 
-  }
-
- formDataHendler = data => {
-    const { contacts } = this.state;
+  const formDataHendler = data => {
+ 
     if (contacts.find(contact => contact.name === data.name)) {
       alert(`${data.name} is already in contact`);
       return
     } else {
-      this.setState(({ contacts }) => ({
-        contacts: [data, ...contacts],
-      }));
+      setContacts(state => [data, ...state]);
     }
   };
 
-  onChangeFifter = e => {
-    this.setState({filter:e.currentTarget.value})
+  const onChangeFifter = e => {
+    setFilter(e.currentTarget.value.toLowerCase())
   }
 
-  deleteContact = id => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(i=>i.id!==id)
-    }))
+  const deleteContact = id => {
+  
+    setContacts(state => state.filter(contact => contact.id !== id))
   }
 
-  render() {
-    const { filter,contacts } = this.state;
-
-    const normolazed = filter.toLowerCase(); 
-
-    const filteredTodos = contacts.filter(todo => todo.name.toLowerCase().includes(normolazed));
-    
-    return (
-      <div
+  return(<div
         style={{
         marginLeft:'20px'
         }}>
         
-        <Phonebook props={this.formDataHendler} />
+        <Phonebook props={formDataHendler} />
         
-        <Contacts props={filteredTodos} filter={filter} change={this.onChangeFifter} onDelete={this.deleteContact} />
+        <Contacts props={filteredTodos} filter={filter} change={onChangeFifter} onDelete={deleteContact} />
         
-      </div>
-    );
-  }
+      </div>)
 };
