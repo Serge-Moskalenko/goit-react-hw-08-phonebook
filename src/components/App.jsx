@@ -1,5 +1,5 @@
 import { Phonebook } from "./Phonebook";
-import { Contacts } from "./Contacts";
+import { Contacts } from "./Contacts/Contacts";
 
 export function App() {
 

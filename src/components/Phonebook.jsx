@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { addContact } from "redax/contactSlice";
-import { useDispatch } from "react-redux";
+import { useAddContactMutation } from 'redux/contactSlice';
 
 export const Phonebook = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const dispatch = useDispatch();
+    const [addContact] = useAddContactMutation();
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -28,7 +27,7 @@ export const Phonebook = () => {
   const handleSubmit = e => {
     e.preventDefault();
     
-    dispatch(addContact(name, number));
+      addContact({ name, number })
     setName('');
     setNumber('');
     
