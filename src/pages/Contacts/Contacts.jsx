@@ -6,7 +6,7 @@ import { useSelector,useDispatch } from "react-redux";
 import { ItemContact } from "./ItemContact";
 
 
-export const Contacts = () => {
+ const Contacts = () => {
     
     const filter = useSelector(selectorFilter);
     const dispatchFilter = useDispatch();
@@ -49,3 +49,5 @@ export const Contacts = () => {
         </>
     )
 };
+
+export default Contacts;
