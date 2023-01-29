@@ -1,22 +1,16 @@
 import {useForm} from 'react-hook-form'
 import { useDispatch } from 'react-redux';
 import { registers } from 'redux/Auth/authOperetions';
-// import { toast,ToastContainer } from 'react-toastify';
 
 const Register = () => {
     const dispatch = useDispatch();
     const { register, handleSubmit, reset } = useForm();
 
-    const handleClickSubmit = ({ name,email,password }) => {
+    const handleClickSubmit = ({ name, email, password }) => {
         dispatch(registers({ name, email, password }))
-            .then(() => alert('создано'))
-            .catch(() =>alert('ошибка')
-      );
         reset();
-        
     };
     
-
     return (
         <>
             <h1>Register</h1>
@@ -28,9 +22,7 @@ const Register = () => {
                         type="text"
                         {...register("name")}
                         required
-                        maxLength={20}
-      
-                    />
+                        maxLength={20} />
                 </label>
 
                 <label >
@@ -43,9 +35,7 @@ const Register = () => {
                         type="email"
                         {...register("email")}
                         required
-                        maxLength={30}
-        
-                    />
+                        maxLength={30} />
                 </label>
               
                 <label > password
@@ -53,19 +43,14 @@ const Register = () => {
                         type="text"
                         {...register("password")}
                         required
-                        maxLength={20}
-      
-                    />
+                        maxLength={20} />
                 </label>
 
-                <button type="submit" style={{
-                    marginTop: "20px"
-                }}
-                >registre</button>
+                <button type="submit" style={{ marginTop: "20px" }}>
+                    registre
+                </button>
             </form>
-    
         </>
-
     )
 };
 
