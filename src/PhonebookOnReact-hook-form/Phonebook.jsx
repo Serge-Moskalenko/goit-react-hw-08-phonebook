@@ -1,11 +1,20 @@
 import {useForm} from 'react-hook-form'
 import { addContact } from 'redux/Contacts/contactsOperetions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectContacts } from 'redux/Contacts/contactsSelectors';
 
 export const Phonebook = () => {
   const dispatch = useDispatch();
+  const contacts= useSelector(selectContacts)
   const { register, handleSubmit, reset } = useForm();
+
+
   const handleClickSubmit = ({ name, number }) => {
+    if (contacts.some(contact => contact.name === name)) {
+      alert(`${name} is already in contacts`);
+      reset();
+      return;
+    }
     dispatch(addContact({ name, number }));
     reset();
   };
