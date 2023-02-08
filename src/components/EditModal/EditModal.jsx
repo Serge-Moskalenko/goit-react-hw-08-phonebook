@@ -1,7 +1,19 @@
-import { Modal } from "@mui/material"
+import { Modal,Box } from "@mui/material"
 import {useForm} from 'react-hook-form'
 import { updateContact } from 'redux/Contacts/contactsOperetions';
 import { useDispatch } from 'react-redux';
+
+const styledModal = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: { xs: '100%', sm: '400px' },
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 export const EditModal = ({isOpen,closeModal,nameD,numberD,id}) => {
     const dispatch = useDispatch();
@@ -19,11 +31,12 @@ export const EditModal = ({isOpen,closeModal,nameD,numberD,id}) => {
     };
         return (
             <>
-            <Modal open={isOpen} onClose={closeModal} >
+                <Modal open={isOpen} onClose={closeModal} >
+                    <Box sx={styledModal}>
                 <form onSubmit={handleSubmit(handleClickSubmit)} style={{
                     border: '2px solid black',
                     padding: '20px',
-                    width: "400px"
+                    width: "300px"
                 }}>
                     <label style={{
                         display: 'flex',
@@ -67,7 +80,8 @@ export const EditModal = ({isOpen,closeModal,nameD,numberD,id}) => {
                         <button type="submit" style={{ marginTop: "20px" }}>
                             edit
                         </button>
-                </form>
+                        </form>
+                        </Box>
                 </Modal>
                 </>
         )
